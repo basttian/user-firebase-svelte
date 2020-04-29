@@ -1,6 +1,8 @@
 <script>
+/* prop */
+export let active = false;
+export let emailUsuario;
 
-export let active = false;/* prop */
 
   import { Router, Link, Route } from "svelte-routing";
   import Home from "../routes/Home.svelte";
@@ -17,14 +19,16 @@ export let active = false;/* prop */
 <!-- ? -->
 {#if active}
         <img class="uk-preserve-width uk-border-circle" src="https://getuikit.com/docs/images/avatar.jpg" width="40" alt="">
+        <p class="uk-align-center">{emailUsuario}</p>
         <hr>
         <ul class="uk-nav uk-nav-default">
             <li class="uk-nav-header">Escritorio</li>
            
-            <li class="uk-active"><Link to="/"><span class="uk-margin-small-right" uk-icon="icon: table"></span> Home</Link></li>
+            <li class="uk-active"><Link to="/"><span class="uk-margin-small-right" uk-icon="icon: home"></span> Home</Link></li>
             <li class="uk-nav-divider"></li>
-            <li><Link to="about"><span class="uk-margin-small-right" uk-icon="icon: table"></span> About</Link></li>
-            <li><Link to="blog"><span class="uk-margin-small-right" uk-icon="icon: table"></span> Blog</Link></li>
+            <li><Link to="about"><span class="uk-margin-small-right" uk-icon="icon: happy"></span> About</Link></li>
+            <li><Link to="blog"><span class="uk-margin-small-right" uk-icon="icon: server
+"></span> Blog</Link></li>
             <!-- <li><Link to="dashboard"><span class="uk-margin-small-right" uk-icon="icon: table"></span> Dashboard</Link></li> -->
         </ul>
 {/if}

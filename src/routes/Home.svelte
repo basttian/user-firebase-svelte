@@ -4,7 +4,7 @@ import DASHBOARD from './Dashboard.svelte';
 
 /* Observador */
 let userActive = false;
-let userEmail = '';
+
 
 $: if (!userActive){
 
@@ -19,7 +19,6 @@ $: if (!userActive){
 		var uid = user.uid;
 		var providerData = user.providerData;
         userActive = true;
-        userEmail = user.email;
         //console.log(user.email);
         
 	} else {
@@ -50,6 +49,34 @@ const Acceso = () => {
  password = '';
 }
 
+let notifications;
+async function resetPassword(){
+await UIkit.modal.prompt('Ingrese un email valido:', '').then(function(emailAddress) {
+    var auth = firebase.auth();
+     auth.sendPasswordResetEmail(emailAddress).then(function() {
+      // Email sent.
+      var notifications = UIkit.notification('Le enviamos un correo para restablecer su contraseña.', 'primary');
+    }).catch(function(error) {
+      // An error happened.
+      var errorCode = error.code;
+      var errorMessage = error.message;
+      if (errorCode === 'auth/invalid-email') {
+        var notifications = UIkit.notification(errorMessage, 'danger');
+      }
+      
+    });
+
+  }).catch(function(error) {
+      // An error happened.
+      var errorCode = error.code;
+      var errorMessage = error.message;
+      if (errorCode === 'auth/argument-error') {
+        var notifications = UIkit.notification(errorMessage, 'danger');
+      }
+      
+    });
+}
+
 </script>
 
 
@@ -68,12 +95,13 @@ const Acceso = () => {
                 <p uk-margin>
                     <button class="uk-button uk-button-primary uk-button-large uk-align-center" on:click={Acceso}>Ingresar</button>
                 </p>
+                <button class="uk-icon-link uk-margin-small-right" uk-icon="lock" uk-tooltip="Olvide mi contraseña" on:click={resetPassword}></button>
             </div>
         </div>
     </div>
 </div>
 {:else}
-<DASHBOARD emailUsuario={userEmail} />
+<DASHBOARD />
 {/if}
 
         
